@@ -1,8 +1,8 @@
 import React from "react";
 import { Route, Routes } from "react-router-dom";
 import "./App.css";
+import NotFound from "./components/UI/404";
 import HomePage from "./pages/HomePage";
-import NotFound from "./UI/404";
 
 function App() {
   return (
