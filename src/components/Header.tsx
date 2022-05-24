@@ -5,16 +5,17 @@ import Informations from "./Informations";
 
 // IP-API Interface for used values
 export interface IPAddressInterface {
-  query: string;
-  status: string;
-  continent: string;
-  countryCode: string;
-  city: string;
-  zip: string;
-  lat: number;
-  lon: number;
-  timezone: string;
+  ip: string;
   isp: string;
+  location: {
+    country: string;
+    region: string;
+    timezone: string;
+    city: string;
+    lat: number;
+    lng: number;
+    postalCode: string;
+  };
 }
 
 // Header componenent interface - passing ipAddress to "HomePage" component so "Map" component can use it
@@ -23,6 +24,8 @@ interface HeaderProps {
 }
 
 const Header: React.FC<HeaderProps> = ({ setIPAddress }) => {
+  const ipKey = process.env.REACT_APP_IP_API_KEY;
+
   const [input, setInput] = useState<string>("");
   const [loading, setLoading] = useState<boolean>(false);
   const [ipAddress, setIpAddress] = useState<IPAddressInterface | undefined>(
@@ -52,16 +55,11 @@ const Header: React.FC<HeaderProps> = ({ setIPAddress }) => {
         throw new Error("No Entry Data");
       }
       // API Request for IP address
-      const response = await axios.get(`http://ip-api.com/json/${input}`);
-      // If there are no records for specific IP Address
-      if (response.data.status === "fail") {
-        setIPAddress(undefined);
-        throw new Error("Invalid Query");
-      }
+      const response = await axios.get(
+        `https://geo.ipify.org/api/v2/country,city?apiKey=${ipKey}&domain=${input}&ipAddress=${input}`
+      );
       // Setting up IP Address if API responded with "success"
-      if (response.data.status === "success") {
-        setIpAddress(response.data);
-      }
+      setIpAddress(response.data);
     } catch (error) {
       console.error(error);
     } finally {

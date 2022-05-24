@@ -13,12 +13,12 @@ const mapbox_key = process.env.REACT_APP_MAPBOX_KEY;
 const Map: React.FC<MapProps> = ({ children, ipAddress }) => {
   const [latitude, setLatitude] = useState<number>(51.505);
   const [longitude, setLongitude] = useState<number>(-0.09);
-  const location = `${ipAddress?.city}, ${ipAddress?.countryCode} ${ipAddress?.zip}`;
+  const location = `${ipAddress?.location.city}, ${ipAddress?.location.country} ${ipAddress?.location.region}`;
 
   useEffect(() => {
     if (ipAddress) {
-      setLatitude(ipAddress?.lat);
-      setLongitude(ipAddress?.lon);
+      setLatitude(ipAddress?.location.lat);
+      setLongitude(ipAddress?.location.lng);
     }
   }, [ipAddress]);
 
@@ -42,7 +42,7 @@ const Map: React.FC<MapProps> = ({ children, ipAddress }) => {
           <Marker position={[latitude, longitude]}>
             <Popup>
               <div className="flex flex-col items-center">
-                <h4 className="font-bold">{ipAddress.query}</h4>
+                <h4 className="font-bold">{ipAddress.ip}</h4>
                 <h4>{location}</h4>
               </div>
             </Popup>
