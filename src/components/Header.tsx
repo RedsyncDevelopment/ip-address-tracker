@@ -1,5 +1,5 @@
 import axios from "axios";
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import bgimage from "../images/pattern-bg.png";
 import Informations from "./Informations";
 
@@ -20,10 +20,10 @@ export interface IPAddressInterface {
 
 // Header componenent interface - passing ipAddress to "HomePage" component so "Map" component can use it
 interface HeaderProps {
-  setIPAddress: (setIPAddress: IPAddressInterface | undefined) => void;
+  onSearch: (ipAddress: IPAddressInterface | undefined) => void;
 }
 
-const Header: React.FC<HeaderProps> = ({ setIPAddress }) => {
+const Header: React.FC<HeaderProps> = ({ onSearch }) => {
   const ipKey = process.env.REACT_APP_IP_API_KEY;
 
   const [input, setInput] = useState<string>("");
@@ -60,17 +60,14 @@ const Header: React.FC<HeaderProps> = ({ setIPAddress }) => {
       );
       // Setting up IP Address if API responded with "success"
       setIpAddress(response.data);
+      // passing ipAddress to parent componenent so Map can use it
+      onSearch(ipAddress);
     } catch (error) {
       console.error(error);
     } finally {
       setLoading(false);
     }
   };
-
-  // passing object to parent component every time user sends new request
-  useEffect(() => {
-    setIPAddress(ipAddress);
-  }, [ipAddress]);
 
   return (
     <>
