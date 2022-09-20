@@ -1,6 +1,4 @@
-import React from "react";
 import { Route, Routes } from "react-router-dom";
-import "./App.css";
 import NotFound from "./components/UI/404";
 import HomePage from "./pages/HomePage";
 

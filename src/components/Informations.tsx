@@ -4,7 +4,7 @@ import InformationItemCard from "./UI/InformationItemCard";
 
 interface InformationsProps {
   ipAddress?: IPAddressInterface;
-  isLoading: boolean;
+  isLoading?: boolean;
 }
 
 const Informations: React.FC<InformationsProps> = ({
@@ -17,7 +17,7 @@ const Informations: React.FC<InformationsProps> = ({
 
   return (
     <>
-      <div className="absolute left-1/2 translate-y-[-50%] translate-x-[-50%] bg-white rounded-lg shadow-md w-3/4">
+      <div className="absolute left-1/2 translate-y-[-50%] translate-x-[-50%] bg-white rounded-lg shadow-md w-3/4 z-10">
         <div className="md:p-8 p-6">
           <div className="grid lg:grid-cols-4 grid-flow-row md:gap-18 gap-4">
             <InformationItemCard heading={"IP ADDRESS"}>
